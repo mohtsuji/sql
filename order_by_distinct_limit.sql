@@ -16,6 +16,8 @@ insert into people values(4, "Chris", 17, "2001-01-01");
 insert into people values(5, "Vette", 20, "2001-01-01");
 insert into people values(6, "Tsuyoshi", 21, "2001-01-01");
 
+
+-- ORDER BY
 #  昇順で表示
 select * from people order by age;
 
@@ -25,6 +27,7 @@ select * from people order by age desc;
 # 誕生日で降順，誕生日が同じ人は名前で降順で並び替えられる
 select * from people order by birth_day desc, name;
 
+-- DISTINCT（重複を削除して抽出）
 # 重複を削除して表示（各誕生日が1度ずつしか表示されない）
 select DISTINCT birth_day from people;
 select DISTINCT birth_day from people order by birth_day;
@@ -32,6 +35,7 @@ select DISTINCT birth_day from people order by birth_day;
 # 名前も誕生日も同じ人は削除される
 SELECT DISTINCT name, birth_day from people;
 
+-- LIMIT
 # 最初の3行だけ表示
 select * from people limit 3;
 # 誕生日を昇順で並び替えたときの上から3人だけ表示

@@ -1,5 +1,7 @@
-select database();
+show databases;
 
+select database();
+use day_4_9_db;
 show tables;
 
 # if(条件式、真の値、偽の値)

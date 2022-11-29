@@ -9,7 +9,7 @@ create table people(
 );
 
 show tables;
-
+ -- INSERT INTO
 insert into people
 values(1, "Taro", "2001-01-01");
 
@@ -48,12 +48,15 @@ where id <= 2;
 
 select * from people
 where name = "Taro";
-
+ 
+-- UPDATE（レコードの更新）
 #  全レコードを変更
 UPDATE people set birth_day=NULL, name="";
 select * from people;
 describe people;
 
+
+-- ALTER（テーブル定義の変更)
 # カラムの定義変更
 alter table people 
 modify name varchar(50) default "nanashi";
@@ -61,7 +64,8 @@ modify name varchar(50) default "nanashi";
 # 変更するレコードを指定
 update people set name="Taro", birth_day="2000-10-10"
 where id > 4;
-
+ 
+-- DELETE
 # レコードの削除
 delete from people where id>4;
 
