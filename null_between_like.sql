@@ -56,8 +56,7 @@ SELECT * FROM users WHERE age BETWEEN 5 AND 10;
 # 年齢が（5以上10以下）以外
 SELECT * FROM users WHERE age not BETWEEN 5 AND 10;
 
-
-# like
+-- like -----------------------------------------------------------
 # % は任意の0文字以上を表す
 # 村なんとかさんだけ取り出す（前方一致）
 SELECT * FROM users WHERE name LIKE "村%";

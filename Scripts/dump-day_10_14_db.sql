@@ -18,6 +18,7 @@
 -- 
 -- Table structure for table `classes`
 -- 
+create database day_10_14_db;
 use day_10_14_db;
 select database();
 DROP TABLE IF EXISTS `classes`;

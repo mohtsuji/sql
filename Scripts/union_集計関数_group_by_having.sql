@@ -1,6 +1,6 @@
 use day_4_9_db;
 
--- UNION
+-- UNION --------------------------------------------------------------------------------
 
 #UNION（重複する行は１つにまとめる）
 #UNION ALL（重複したまま取り出す）
@@ -44,7 +44,7 @@ union
 select age,name from users;
 
 
--- 集計関数
+-- 集計関数 -------------------------------------------------------
 
 # NULLについて
 # SUM,MIN,MAX,AVGではNULLは無視される
@@ -92,7 +92,7 @@ select COALESCE (num, 0) from tmp_count ;
 select avg(COALESCE (num, 0)) from tmp_count ;
 
 
--- group by
+-- group by --------------------------------------------------------
 
 select age from users
 	WHERE birth_place ="日本"
