@@ -251,21 +251,65 @@ customersテーブルのidに対して、ordersテーブルのorder_amount*order
 7日間平均、15日平均値、30日平均値が計算できない区間(対象よりも前の日付のデータが十分にない区間)は、空白を表示してください。*/
 
 select * from customers c;
+select * from customers c where age > 50;
 select * from orders o ;
 
+# これはだめ、累積で計算してるから
 with cus_over_50 as (
 	select * from customers c where age > 50
+), amount_table as (
+	SELECT
+		cus_over_50.id,
+		cus_over_50.age,
+		o.order_date ,
+		sum(o.order_amount * o.order_price) over(partition by cus_over_50.id order by order_date) as amount
+	from orders o
+	inner join cus_over_50
+		on o.customer_id  = cus_over_50.id
 )
-select
-	(o.order_amount * o.order_price) as amount
-from orders o
-inner join cus_over_50
-	on o.customer_id  = cus_over_50.id
+SELECT 
+	*,
+	avg(am.amount) over(rows between 6 PRECEDING and current row ) as "７日間平均",
+	avg(am.amount) over(rows between 6 PRECEDING and current row ) as "７日間平均",
+	avg(am.amount) over(rows between 6 PRECEDING and current row ) as "７日間平均"
+from amount_table am
+		;
+
+# 模範回答
+with cus_over_50 as (
+	select * from customers c where age > 50
+), customers_order as (
+	SELECT
+		co.id,
+		co.age,
+		o.order_date ,
+		sum(o.order_amount * o.order_price)  as amount,
+		row_number() over(partition by co.id order by o.order_date) as row_num
+	from orders o
+	inner join cus_over_50 co
+		on o.customer_id  = co.id
+	group by co.id, o.order_date 
+)
+SELECT 
+	*,
+	CASE 
+		when row_num < 7 then ""
+		else avg(cus.amount) over(partition by id order by order_date rows between 6 PRECEDING and current row )
+	END as  "７日間平均",
+	CASE 
+		when row_num < 15 then ""
+		else avg(cus.amount) over(rows between 14 PRECEDING and current row )
+	END as "15日間平均",
+	CASE 
+		when row_num < 30 then ""
+		else avg(cus.amount) over(rows between 29 PRECEDING and current row ) 
+	END as "30日間平均"
+FROM customers_order cus
 ;
 
 
 
-
+avg(amount) over(rows between 6 PRECEDING and current row )
 
 
 
