@@ -2,7 +2,6 @@
 
 show databases;
 
-create database day_10_14_db;
 use day_10_14_db;
 select database();
 show tables;
